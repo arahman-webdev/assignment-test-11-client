@@ -1,11 +1,85 @@
-import React from 'react';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import "swiper/css/effect-fade";
+import { Fade, Zoom } from "react-awesome-reveal";
 
-const Carosol = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+const Carousel = () => {
+  // Array with image URLs and text for each slide
+  const slides = [
+    {
+      img: "https://i.ibb.co.com/JsdHzwR/slider-1.jpg",
+      title: "Drive Your Dreams Today!",
+      
+    },
+    {
+      img: "https://i.ibb.co.com/5T7vBrm/slider-2.jpg",
+      title: "Your Next Car Awaits You.",
+      
+    },
+    {
+      img: "https://i.ibb.co.com/m45w9nF/slider-3.jpg",
+      title: "Drive Your Dreams Today!",
+     
+    },
+  ];
+
+  return (
+    <Swiper
+      className="z-0"
+      spaceBetween={30}
+      slidesPerView={1}
+      navigation
+      pagination={{ clickable: true }}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
+      effect="fade"
+      modules={[Navigation, Pagination, Autoplay, EffectFade]}
+    >
+      {slides.map((slide, index) => (
+        <SwiperSlide key={index} className="relative">
+          {/* Background Image */}
+          <div
+            className="w-full h-[500px] md:h-[100vh] bg-cover bg-center transition-transform duration-700 transform hover:scale-105"
+            style={{ backgroundImage: `url(${slide.img})` }}
+          ></div>
+
+          {/* Overlay with Animated Text */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#000] bg-opacity-65">
+            {/* Fade Animation for Title */}
+            <Fade triggerOnce>
+              <h2 className="md:text-9xl text-6xl font-bold font-Roboto text-[#CDF7FF] uppercase text-center w-7/12 mx-auto">
+                {slide.title}
+              </h2>
+            </Fade>
+
+            {/* Zoom Animation for Description */}
+            <Zoom triggerOnce>
+              <p
+                className="md:text-4xl text-2xl font-bold font-Roboto text-[#CDF7FF] uppercase text-center mt-4"
+                style={{
+                  WebkitTextStroke: "1px #CDF7FF",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                {slide.description}
+              </p>
+            </Zoom>
+
+            {/* View More Button */}
+            <Fade triggerOnce>
+              <button
+                className="mt-8 px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-[#3498db] to-[#2ecc71] rounded-lg shadow-lg hover:shadow-2xl hover:from-[#2ecc71] hover:to-[#3498db] transition-all duration-300"
+                onClick={() => alert(`Viewing more about: ${slide.title}`)}
+              >
+                View Available 
+              </button>
+            </Fade>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  );
 };
 
-export default Carosol;
+export default Carousel;
