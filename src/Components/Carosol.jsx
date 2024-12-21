@@ -4,6 +4,7 @@ import "swiper/css/navigation";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css/effect-fade";
 import { Fade, Zoom } from "react-awesome-reveal";
+import { Link } from "react-router-dom";
 
 const Carousel = () => {
   // Array with image URLs and text for each slide
@@ -11,17 +12,19 @@ const Carousel = () => {
     {
       img: "https://i.ibb.co.com/JsdHzwR/slider-1.jpg",
       title: "Drive Your Dreams Today!",
+      description: 'Discover the perfect car for your journey. Your next adventure begins here—find the car!'
       
     },
     {
       img: "https://i.ibb.co.com/5T7vBrm/slider-2.jpg",
-      title: "Your Next Car Awaits You.",
+      title: "Drive Your Dreams Today!",
+      description: 'Discover the perfect car for your journey. Your next adventure begins here—find the car!'
       
     },
     {
       img: "https://i.ibb.co.com/m45w9nF/slider-3.jpg",
       title: "Drive Your Dreams Today!",
-     
+      description: 'Embark on an exciting journey to own your dream car. Explore endless possibilities and drive!'
     },
   ];
 
@@ -45,10 +48,10 @@ const Carousel = () => {
           ></div>
 
           {/* Overlay with Animated Text */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#000] bg-opacity-65">
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#020202] bg-opacity-65">
             {/* Fade Animation for Title */}
             <Fade triggerOnce>
-              <h2 className="md:text-9xl text-6xl font-bold font-Roboto text-[#CDF7FF] uppercase text-center w-7/12 mx-auto">
+              <h2 className="md:text-9xl text-4xl font-bold font-Roboto text-[#CDF7FF] uppercase text-center w-7/12 mx-auto">
                 {slide.title}
               </h2>
             </Fade>
@@ -56,11 +59,11 @@ const Carousel = () => {
             {/* Zoom Animation for Description */}
             <Zoom triggerOnce>
               <p
-                className="md:text-4xl text-2xl font-bold font-Roboto text-[#CDF7FF] uppercase text-center mt-4"
-                style={{
-                  WebkitTextStroke: "1px #CDF7FF",
-                  WebkitTextFillColor: "transparent",
-                }}
+                className="md:text-2xl text-xl font-semibold font-Roboto text-[#CDF7FF] uppercase text-center  w-7/12 mx-auto mb-10 mt-10"
+                // style={{
+                //   WebkitTextStroke: "1px #CDF7FF",
+                //   WebkitTextFillColor: "transparent",
+                // }}
               >
                 {slide.description}
               </p>
@@ -68,12 +71,12 @@ const Carousel = () => {
 
             {/* View More Button */}
             <Fade triggerOnce>
-              <button
-                className="mt-8 px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-[#3498db] to-[#2ecc71] rounded-lg shadow-lg hover:shadow-2xl hover:from-[#2ecc71] hover:to-[#3498db] transition-all duration-300"
-                onClick={() => alert(`Viewing more about: ${slide.title}`)}
+              <Link to='/available-cars'
+                className=" px-8 py-4 text-lg font-semibold text-white bg-[#FF3600]  rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                
               >
-                View Available 
-              </button>
+                View Available Cars
+              </Link>
             </Fade>
           </div>
         </SwiperSlide>
