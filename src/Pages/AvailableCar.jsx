@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 import { FaSearch, FaTh, FaList, FaRegCalendarAlt, FaDollarSign } from "react-icons/fa";
+import { IoLogoModelS } from "react-icons/io";
 
 const AvailableCar = () => {
     const availableCars = useLoaderData();
@@ -48,14 +49,14 @@ const AvailableCar = () => {
                     <select
                         value={sortOption}
                         onChange={(e) => setSortOption(e.target.value)}
-                        className="border px-3 py-2 rounded-md"
+                        className="border px-3 py-4 rounded-md"
                     >
                         <option value="">Sort by Date</option>
                         <option value="dateNewest">Date Added: Newest First</option>
                         <option value="dateOldest">Date Added: Oldest First</option>
                     </select>
                 </div>
-                <div className="flex items-center border rounded-md px-3 py-2 w-full md:w-2/3">
+                <div className="flex items-center border rounded-md px-3 py-2 w-full md:w-2/4">
                     <FaSearch className="text-gray-500 mr-2" />
                     <input
                         type="text"
@@ -74,12 +75,12 @@ const AvailableCar = () => {
 
 
 
-                <div className="flex items-center">
+                <div className="flex items-center gap-4">
                     <div>
                         <select
                             value={sortOption}
                             onChange={(e) => setSortOption(e.target.value)}
-                            className="border px-3 py-2 rounded-md"
+                            className="border px-3 py-4 rounded-md"
                         >
                             <option value="">Sort by Price</option>
                             <option value="priceLowest">Price: Lowest First</option>
@@ -92,13 +93,13 @@ const AvailableCar = () => {
                         {/* View Toggle */}
                         <div className="flex items-center space-x-2">
                             <button
-                                className={`p-2 border rounded-md ${viewMode === "grid" ? "bg-gray-300" : ""}`}
+                                className={`p-2 px-4 py-4 border rounded-md ${viewMode === "grid" ? "bg-gray-300" : ""}`}
                                 onClick={() => setViewMode("grid")}
                             >
                                 <FaTh />
                             </button>
                             <button
-                                className={`p-2 border rounded-md ${viewMode === "list" ? "bg-gray-300" : ""}`}
+                                className={`px-4 py-4 border rounded-md ${viewMode === "list" ? "bg-gray-300" : ""}`}
                                 onClick={() => setViewMode("list")}
                             >
                                 <FaList />
@@ -116,42 +117,61 @@ const AvailableCar = () => {
 
             {/* Cars Display */}
             <div
-                className={`${viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}`}>
+                className={`${viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"
+                    }`}
+            >
                 {sortedCars.map((car) => (
                     <div
                         key={car._id}
-                        className="border rounded-md shadow-md p-4  text-center">
-
+                        className="border rounded-md flex flex-col shadow-md p-4 text-center h-full"
+                    >
+                        {/* Image */}
                         <div>
                             <img
                                 src={car.photoUrl || "https://via.placeholder.com/150"}
                                 alt={car.carModel}
-                                className="w-full object-cover rounded mb-3" />
+                                className="w-full object-cover rounded mb-3"
+                            />
                         </div>
 
-                        <div>
-                            <h3 className="text-lg font-bold mb-1">{car.carModel}</h3>
-                            <p className="text-gray-500 mb-1">
-                                <FaRegCalendarAlt className="inline mr-1" />
-                                {car.today ? new Date(car.today).toLocaleDateString() : "N/A"}
-                            </p>
-                            <p className="text-gray-500 mb-1">
-                                <FaDollarSign className="inline mr-1" />
-                                ${car.dailyPrice} / day
-                            </p>
-                            <p className={`mb-3 ${car.availability === "Available" ? "text-green-500" : "text-red-500"}`}>
-                                {car.availability}
-                            </p>
+                        {/* Content */}
+                        <div className="flex flex-col justify-between flex-grow">
+                            <div className="flex flex-col">
+                                <h3 className="text-lg font-bold mb-1 flex items-center gap-4"><span><IoLogoModelS /></span>{car.carModel}</h3>
+                                <p className="text-gray-500 mb-1 flex pb-4">
+                                    {car?.description.substring(0,32)}.......
+                                </p>
+                                
+                                <hr className="pt-4"></hr>
+                                <p className="text-gray-500 mb-1 flex items-center gap-6">
+                                    <span className="font-bold text-black"><FaDollarSign className="inline" />Fee </span>  <span>${car.dailyPrice} / day</span>
+                                    
+                                </p>
+                                
+                                <p
+                                    className={`mb-3 ${car.availability === "Available" ? "text-green-500 flex gap-5" : "text-red-500"
+                                        }`}
+                                >
+                                   <span className="text-black font-bold">Availability:</span> <span>{car?.availability}</span>
+                                </p>
+                                <p className="flex items-center">
+                                   <span className="text-black font-bold">Availability:</span> <span>{car?.features.map(feature => <span>
+                                    {feature[1]}
+                                   </span>)},</span>
+                                </p>
+                            </div>
+                            {/* Button */}
+                            <Link
+                                to={`/car/${car._id}`}
+                                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
+                            >
+                                Book Now
+                            </Link>
                         </div>
-                        <Link
-                            to={`/car/${car._id}`}
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                        >
-                            Book Now
-                        </Link>
                     </div>
                 ))}
             </div>
+
 
             {/* No Cars Found */}
             {sortedCars.length === 0 && !errorMessage && (
