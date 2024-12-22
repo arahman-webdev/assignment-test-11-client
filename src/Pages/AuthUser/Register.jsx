@@ -9,83 +9,86 @@ import auth from '../Firebase/firebase.init';
 
 const Register = () => {
 
- const {createUser, loginWithGoogle} = useContext(AuthContext)
- const [showPassword, setShowPassword] = useState(false)
- const navigate = useNavigate()
-//  const [success, setSuccess] = useState(null)
+    const { createUser, loginWithGoogle, logOutUser } = useContext(AuthContext)
+    const [showPassword, setShowPassword] = useState(false)
+    const navigate = useNavigate()
+    //  const [success, setSuccess] = useState(null)
 
- const handleRegister = (e) => {
-    e.preventDefault();
+    const handleRegister = (e) => {
+        e.preventDefault();
 
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    const name = form.name.value;
-    const photo = form.photoUrl.value;
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        const name = form.name.value;
+        const photo = form.photoUrl.value;
 
-    // Validation
-    if (password.length < 6) {
-        
-        return Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Passwords must be 6 characters or longer!",
-            
-          });
-    }
+        // Validation
+        if (password.length < 6) {
 
-    if (!/[a-z]/.test(password)) {
-        return Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Passwords must contain at least one lowercase letter!",
-            
-          });
-    }
-    if (!/[A-Z]/.test(password)) {``
-        return Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Passwords must contain at least one uppercase letter!",
-            
-          });
-    }
-
-    // Clear error message before proceeding
- 
-
-    // Create user
-    createUser(email, password)
-        .then((res) => {
-            console.log(res);
-            const profile = {
-                displayName: name,
-                photoURL: photo,
-            };
-
-            // Update user profile
-            return updateProfile(auth.currentUser, profile);
-        })
-        .then(() => {
-            
-            Swal.fire({
-                title: "Good job!",
-                text: "Welcome back! You are successfully registered!",
-                icon: "success"
-              });
-            navigate('/');
-           
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-          
-            Swal.fire({
+            return Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "This email is already in use! Please provide a different email address.",
-              });
-        });
-};
+                text: "Passwords must be 6 characters or longer!",
+
+            });
+        }
+
+        if (!/[a-z]/.test(password)) {
+            return Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Passwords must contain at least one lowercase letter!",
+
+            });
+        }
+        if (!/[A-Z]/.test(password)) {
+            ``
+            return Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Passwords must contain at least one uppercase letter!",
+
+            });
+        }
+
+        // Clear error message before proceeding
+
+
+        // Create user
+        createUser(email, password)
+            .then((res) => {
+                console.log(res);
+                const profile = {
+                    displayName: name,
+                    photoURL: photo,
+                };
+
+                // Update user profile
+                return updateProfile(auth.currentUser, profile);
+            })
+            .then(() => {
+
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Welcome back! You are successfully registered!",
+                    icon: "success"
+                });
+                navigate('/login')
+                return logOutUser()
+               
+
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "This email is already in use! Please provide a different email address.",
+                });
+            });
+    };
 
 
 
@@ -93,12 +96,12 @@ const Register = () => {
         loginWithGoogle()
             .then((res) => {
                 console.log("Google sign-in successful:", res.user);
-                
-                
+
+
             })
             .catch((error) => {
                 console.error("Google sign-in error:", error);
-               
+
             });
     };
     return (

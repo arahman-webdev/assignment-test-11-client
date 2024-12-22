@@ -8,6 +8,7 @@ import MyCars from "../Pages/MyCars";
 import AvailableCar from "../Pages/AvailableCar";
 import MyBooking from "../Pages/MyBooking";
 import AddCarForm from "../Pages/AddCar";
+import UpdateCar from "./PrivateLayout/UpdateCar";
 
 
 
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
             },
             {
                 path: '/my-cars',
-                element:<MyCars></MyCars>
+                element:<MyCars></MyCars>,
+                
             },
             {
                 path:'/my-booking',
@@ -35,7 +37,13 @@ const router = createBrowserRouter([
             },
             {
                 path:'/available-cars',
-                element: <AvailableCar></AvailableCar>
+                element: <AvailableCar></AvailableCar>,
+                loader: () => fetch('http://localhost:5000/cars')
+            },
+            {
+                path: '/update/:id',
+                element: <UpdateCar></UpdateCar>,
+                loader: ({params}) => fetch(`http://localhost:5000/cars/${params.id}`)
             },
             {
                 path: '/login',

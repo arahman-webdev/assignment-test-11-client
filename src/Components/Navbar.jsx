@@ -29,19 +29,11 @@ const Navbar = () => {
             <NavLink to="/" className="flex items-center gap-1">
                 Home
             </NavLink>
-            <NavLink to="/brands" className="flex items-center gap-1">
+            <NavLink to="/available-cars" className="flex items-center gap-1">
                 Available Cars
             </NavLink>
-            {
-                user ? <NavLink to="/my-profile" className="flex items-center gap-1">
-                    <FaRegUserCircle />
-                    My Profile
-                </NavLink> : ''
-            }
-            <NavLink to='/about' className="flex items-center gap-1">
-                <FcAbout className="text-white"></FcAbout>
-                About
-            </NavLink>
+
+
         </>
     );
 

@@ -1,27 +1,26 @@
-import axios from "axios";
-import React, { useContext, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import Swal from "sweetalert2";
-import { AuthContext } from "../Auth/AuthProvider";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { useLoaderData } from 'react-router-dom';
 
-const AddCarForm = () => {
+const UpdateCar = () => {
 
-    const { user } = useContext(AuthContext)
-    const [images, setImages] = useState([]);
+    const car = useLoaderData()
+    console.log(car)
+    
+        const [images, setImages] = useState([]);
+    
+        const onDrop = (acceptedFiles) => {
+            setImages((prevImages) => [...prevImages, ...acceptedFiles]);
+        };
+    
+        const { getRootProps, getInputProps } = useDropzone({
+            onDrop,
+            accept: "image/*",
+        });
 
-    const onDrop = (acceptedFiles) => {
-        setImages((prevImages) => [...prevImages, ...acceptedFiles]);
-    };
-
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop,
-        accept: "image/*",
-    });
-
-    const today = new Date().toLocaleDateString();
-
-    const handleAddCar = (e) => {
-        e.preventDefault();
+    const handleUpdateInfo = e =>{
+        e.preventDefault()
 
         const form = e.target;
         const carModel = form.carModel.value;
@@ -34,7 +33,7 @@ const AddCarForm = () => {
         const location = form.location.value;
         const bookingCount = 0; // Default value
 
-        const carInfo = {
+        const updateCarInfo = {
             carModel,
             dailyPrice,
             availability,
@@ -45,44 +44,29 @@ const AddCarForm = () => {
             bookingCount,
             photoUrl,
             images,
-            today,
-            hr_name: user?.displayName,
-            hr_email: user?.email,
-            hr_img: user?.photoURL
+          
         };
 
-        console.log("Car Info:", carInfo);
+       
 
-
-
-        fetch('http://localhost:5000/add-car', {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(carInfo)
+        axios.put(`http://localhost:5000/cars/${car._id}`, updateCarInfo)
+        .then(res => {
+            const data = res.data;
+            console.log(data)
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if(data.insertedId){
-                    Swal.fire({
-                        title: "Good job!",
-                        text: "You added a car!",
-                        icon: "success"
-                      });
-                }
-            })
-    };
+        .catch(error =>{
+            console.log(error)
+        })
 
+    }
     return (
         <div className="py-10">
 
             <form
-                onSubmit={handleAddCar}
+                onSubmit={handleUpdateInfo}
                 className="max-w-3xl mx-auto p-8 bg-white shadow-md rounded-lg border"
             >
-                <h2 className="text-2xl font-bold mb-6">Add a Car</h2>
+                <h2 className="text-2xl font-bold mb-6">Update a Car Info</h2>
 
                 {/* Car Model */}
                 <div className="mb-4">
@@ -93,6 +77,7 @@ const AddCarForm = () => {
                         type="text"
                         id="carModel"
                         name="carModel"
+                        defaultValue={car?.carModel}
                         className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter car model"
                         required
@@ -111,6 +96,7 @@ const AddCarForm = () => {
                         type="number"
                         id="dailyPrice"
                         name="dailyPrice"
+                        defaultValue={car?.dailyPrice}
                         className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter daily rental price"
                         required
@@ -128,6 +114,7 @@ const AddCarForm = () => {
                     <select
                         id="availability"
                         name="availability"
+                        defaultValue={car?.availability}
                         className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <option value="Available">Available</option>
@@ -147,6 +134,7 @@ const AddCarForm = () => {
                         type="text"
                         id="registrationNumber"
                         name="registrationNumber"
+                        defaultValue={car?.registrationNumber}
                         className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter registration number"
                         required
@@ -162,6 +150,7 @@ const AddCarForm = () => {
                         type="text"
                         id="features"
                         name="features"
+                        defaultValue={car?.features}
                         className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="e.g., GPS, AC, Bluetooth"
                     />
@@ -178,6 +167,7 @@ const AddCarForm = () => {
                     <textarea
                         id="description"
                         name="description"
+                        defaultValue={car?.description}
                         className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         rows="4"
                         placeholder="Enter a description of the car"
@@ -191,7 +181,7 @@ const AddCarForm = () => {
                         {...getRootProps()}
                         className="border-dashed border-2 border-gray-300 p-4 text-center cursor-pointer"
                     >
-                        <input {...getInputProps()}  />
+                        <input {...getInputProps()} />
                         <p className="text-gray-500">Drag & drop images, or click to upload</p>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-4">
@@ -217,9 +207,10 @@ const AddCarForm = () => {
                         type="url"
                         id="photoUrl"
                         name="photo_url"
+                        defaultValue={car?.photoUrl}
                         className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter the car's location"
-                        
+
                     />
                 </div>
 
@@ -232,6 +223,7 @@ const AddCarForm = () => {
                         type="text"
                         id="location"
                         name="location"
+                        defaultValue={car?.location}
                         className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter the car's location"
                         required
@@ -244,7 +236,7 @@ const AddCarForm = () => {
                         type="submit"
                         className="bg-blue-500 text-white px-6 py-2 rounded shadow hover:bg-blue-600 transition-all"
                     >
-                        Add Car Info
+                        Update Car Info
                     </button>
                 </div>
             </form>
@@ -252,4 +244,4 @@ const AddCarForm = () => {
     );
 };
 
-export default AddCarForm;
+export default UpdateCar;         
