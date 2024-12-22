@@ -7,6 +7,7 @@ import AddCar from "../Pages/AddCar";
 import MyCars from "../Pages/MyCars";
 import AvailableCar from "../Pages/AvailableCar";
 import MyBooking from "../Pages/MyBooking";
+import AddCarForm from "../Pages/AddCar";
 
 
 
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'/add-car',
-                element:<AddCar></AddCar>
+                element:<AddCarForm></AddCarForm>
             },
             {
                 path: '/my-cars',

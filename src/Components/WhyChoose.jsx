@@ -41,7 +41,7 @@ const WhyChooseUs = () => {
                             className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border"
                         >
                             <div className="mb-4">{feature.icon}</div>
-                            <h3 className="text-xl font-semibold mb-2 text-[#FF3600]">{feature.title}</h3>
+                            <h3 className="text-xl font-semibold mb-2 text-black">{feature.title}</h3>
                             <p className="text-gray-600 text-center">{feature.description}</p>
                         </div>
                     ))}
