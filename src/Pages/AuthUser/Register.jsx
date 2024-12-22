@@ -1,15 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import googleImg from '../../assets/images/google.png'
 import { AuthContext } from '../../Auth/AuthProvider';
 import Swal from 'sweetalert2';
+import { updateProfile } from 'firebase/auth';
+import auth from '../Firebase/firebase.init';
 
 const Register = () => {
 
  const {createUser, loginWithGoogle} = useContext(AuthContext)
  const [showPassword, setShowPassword] = useState(false)
- const [success, setSuccess] = useState(null)
+ const navigate = useNavigate()
+//  const [success, setSuccess] = useState(null)
 
  const handleRegister = (e) => {
     e.preventDefault();
@@ -30,9 +33,7 @@ const Register = () => {
             
           });
     }
-    // if (password !== confirmPassword) {
-    //     return setErrorMessage('Passwords do not match');
-    // }
+
     if (!/[a-z]/.test(password)) {
         return Swal.fire({
             icon: "error",
@@ -51,7 +52,7 @@ const Register = () => {
     }
 
     // Clear error message before proceeding
-    setErrorMessage('');
+ 
 
     // Create user
     createUser(email, password)
@@ -66,16 +67,23 @@ const Register = () => {
             return updateProfile(auth.currentUser, profile);
         })
         .then(() => {
-            setSuccess(true);
-            toastify("Welcome back! You are successfully registered.", "success");
+            
+            Swal.fire({
+                title: "Good job!",
+                text: "Welcome back! You are successfully registered!",
+                icon: "success"
+              });
             navigate('/');
-            form.reset(); 
+           
         })
         .catch((error) => {
             console.error('Error:', error);
-            setSuccess(false);
-            setErrorMessage('Registration failed. Please try again.');
-            toastify("This email is already in use. Please provide a different email address.", "error");
+          
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "This email is already in use! Please provide a different email address.",
+              });
         });
 };
 
