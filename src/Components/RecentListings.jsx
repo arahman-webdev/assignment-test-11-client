@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
 
 const RecentListings = () => {
   const [listingCars, setListingCars] = useState([]);
@@ -8,8 +9,15 @@ const RecentListings = () => {
     axios.get("http://localhost:5000/cars").then((res) => {
       const data = res.data;
       setListingCars(data);
+
+      const sortedCar = data.sort((a, b) => new Date(b.today) - new Date(a.today))
+      setListingCars(sortedCar)
+
     });
   }, []);
+
+
+
 
   return (
     <section className="bg-[#F5F6FE] py-36">
@@ -46,7 +54,9 @@ const RecentListings = () => {
                   {car.availability || "N/A"}
                 </p>
                 <p className="text-gray-400 text-sm">
-                  {car.today ? `Added ${new Date(car.today).toLocaleDateString()}` : "Date Not Available"}
+                  {car.today
+                    ? `Added ${formatDistanceToNow(new Date(car.today), { addSuffix: true })}`
+                    : "Date Not Available"}
                 </p>
               </div>
               <div className="mt-4">

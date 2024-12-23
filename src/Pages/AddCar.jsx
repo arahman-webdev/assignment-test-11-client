@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Auth/AuthProvider";
-
+import { formatISO } from "date-fns";
 const AddCarForm = () => {
 
     const { user } = useContext(AuthContext)
@@ -18,7 +18,8 @@ const AddCarForm = () => {
         accept: "image/*",
     });
 
-    const today = new Date().toLocaleDateString();
+    // const today = new Date().toLocaleDateString();
+    const today = formatISO(new Date());
 
     const handleAddCar = (e) => {
         e.preventDefault();
