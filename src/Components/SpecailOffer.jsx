@@ -25,7 +25,7 @@ const SpecialOffers = () => {
 
     return (
         <section className=" bg-[#FFF] py-36">
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="w-4/5 mx-auto px-6 lg:px-8">
                 <div className="text-center md:w-5/6 mx-auto py-16 space-y-7">
                     <h2 className="text-3xl font-bold text-[#FF3600] text-center">Special Offers</h2>
                     <p className="text-4xl font-bold">Unlock amazing discounts and enjoy your next ride for less with our exclusive offers!</p>

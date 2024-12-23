@@ -25,7 +25,7 @@ const AvailableCar = () => {
             setErrorMessage(""); // Clear error message
         } else {
             setFilteredCars([]); // No results found
-            setErrorMessage("No cars match your search criteria.");
+            setErrorMessage("No cars match your search key.");
         }
     };
 
@@ -143,8 +143,8 @@ const AvailableCar = () => {
                         {/* Image */}
                         <div>
                             <img
-                                src={car.photoUrl || "https://via.placeholder.com/150"}
-                                alt={car.carModel}
+                                src={car?.photoUrl || "https://via.placeholder.com/150"}
+                                alt={car?.carModel}
                                 className="w-full object-cover rounded mb-3"
                             />
                         </div>
