@@ -43,7 +43,7 @@ const AuthProvider = ({children}) => {
     }
 
     const userInfo ={
-        name: 'omer',
+        
         createUser,
         loginUser,
         logOutUser,

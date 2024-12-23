@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../../Auth/AuthProvider';
+import { format } from 'date-fns';
+import axios from 'axios';
 
 const CarDetail = () => {
     const car = useLoaderData()
-
+    const {user} = useContext(AuthContext)
 
     const handleBookNow = () => {
         Swal.fire({
@@ -24,10 +27,52 @@ const CarDetail = () => {
           confirmButtonText: "Confirm Booking",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Booked!", "Your booking is confirmed.", "success");
+            // Format the date
+            const formattedDate = new Date().toLocaleString("en-GB", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+      
+            // Prepare booking data
+            const bookingData = {
+              carImage: car?.photoUrl,
+              carModel: car?.carModel,
+              bookingDate: formattedDate,
+              dailyPrice: car?.dailyPrice,
+              email: user?.email,
+              status: "Pending",
+              carId: car?._id,
+              buyerName: car?.hr_name,
+              buyerEmail: car?.hr_email,
+            };
+      
+            // Send data to the server
+            axios
+              .post("http://localhost:5000/bookings", bookingData, {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+              .then((res) => {
+                const data = res.data;
+                console.log("Booking Response:", data);
+      
+                // Success notification
+                Swal.fire("Booked!", "Your booking is confirmed.", "success");
+              })
+              .catch((error) => {
+                console.error("Error storing booking:", error);
+      
+                // Error notification
+                Swal.fire("Error", "Failed to store booking. Please try again.", "error");
+              });
           }
         });
       };
+      
 
     console.log(car)
     return (
