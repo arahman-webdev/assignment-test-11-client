@@ -1,6 +1,6 @@
-import axios from "axios";
+
 import React, { useContext, useState } from "react";
-import { useDropzone } from "react-dropzone";
+
 import Swal from "sweetalert2";
 import { AuthContext } from "../Auth/AuthProvider";
 import { formatISO } from "date-fns";
@@ -9,14 +9,14 @@ const AddCarForm = () => {
     const { user } = useContext(AuthContext)
     const [images, setImages] = useState([]);
 
-    const onDrop = (acceptedFiles) => {
-        setImages((prevImages) => [...prevImages, ...acceptedFiles]);
-    };
+    // const onDrop = (acceptedFiles) => {
+    //     setImages((prevImages) => [...prevImages, ...acceptedFiles]);
+    // };
 
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop,
-        accept: "image/*",
-    });
+    // const { getRootProps, getInputProps } = useDropzone({
+    //     onDrop,
+    //     accept: "image/*",
+    // });
 
     // const today = new Date().toLocaleDateString();
     const today = formatISO(new Date());
@@ -34,6 +34,7 @@ const AddCarForm = () => {
         const photoUrl = form.photo_url.value;
         const location = form.location.value;
         const bookingCount = 0; // Default value
+        const booking_status = "Pending";
 
         const carInfo = {
             carModel,
@@ -47,6 +48,7 @@ const AddCarForm = () => {
             photoUrl,
             images,
             today,
+            booking_status,
             hr_name: user?.displayName,
             hr_email: user?.email,
             hr_img: user?.photoURL
@@ -185,28 +187,7 @@ const AddCarForm = () => {
                     ></textarea>
                 </div>
 
-                {/* Images */}
-                <div className="mb-4">
-                    <label className="block text-sm font-semibold mb-2">Upload Images</label>
-                    <div
-                        {...getRootProps()}
-                        className="border-dashed border-2 border-gray-300 p-4 text-center cursor-pointer"
-                    >
-                        <input {...getInputProps()}  />
-                        <p className="text-gray-500">Drag & drop images, or click to upload</p>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-4">
-                        {images.map((file, index) => (
-                            <div key={index} className="w-24 h-24 border rounded">
-                                <img
-                                    src={URL.createObjectURL(file)}
-                                    alt="Preview"
-                                    className="w-full h-full object-cover rounded"
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                
 
                 {/* photot url  */}
 

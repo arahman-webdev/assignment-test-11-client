@@ -10,6 +10,7 @@ import MyBooking from "../Pages/MyBooking";
 import AddCarForm from "../Pages/AddCar";
 import UpdateCar from "./PrivateLayout/UpdateCar";
 import CarDetail from "./PrivateLayout/CarDetail";
+import ManageCar from "./PrivateLayout/ManageCar";
 
 
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path:'/my-booking',
                 element: <MyBooking></MyBooking>
+            },
+            {
+                path: '/manage-car',
+                element: <ManageCar></ManageCar>
             },
             {
                 path:'/available-cars',

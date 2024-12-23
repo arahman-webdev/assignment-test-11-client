@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
+import { Link } from "react-router-dom";
 
 const RecentListings = () => {
   const [listingCars, setListingCars] = useState([]);
@@ -47,22 +48,26 @@ const RecentListings = () => {
                   <span className="font-bold">Daily Price:</span> ${car.dailyPrice || "N/A"}/day
                 </p>
                 <p
-                  className={`font-bold mb-1 ${
-                    car.availability === "Available" ? "text-green-500" : "text-red-500"
-                  }`}
+                  className={`font-bold mb-1 ${car.availability === "Available" ? "text-green-500" : "text-red-500"
+                    }`}
                 >
                   {car.availability || "N/A"}
                 </p>
                 <p className="text-gray-400 text-sm">
                   {car.today
-                    ? `Added ${formatDistanceToNow(new Date(car.today), { addSuffix: true })}`
+                    ? `Added ${formatDistanceToNow(new Date(car?.today), { addSuffix: true })}`
                     : "Date Not Available"}
                 </p>
+                <p className=" text-black font-bold">
+                  Bookings: <span className="font-bold text-gray-500">{car.bookingCount || 0}</span>
+                </p>
               </div>
-              <div className="mt-4">
-                <button className="bg-blue-500 text-white px-4 py-2 w-full rounded hover:bg-blue-600">
-                  Book Now
-                </button>
+              <div className="mt-4 w-full">
+
+                <Link to={`/detail/${car._id}`} className="">
+                  <button className="bg-blue-500 text-white px-4 py-2 w-full  rounded hover:bg-blue-600">Book Now</button>
+                </Link>
+
               </div>
             </div>
           ))}

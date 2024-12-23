@@ -81,7 +81,7 @@ const Navbar = () => {
                                         <ul className="menu menu-horizontal px-1 text-[#111] flex flex-col">
                                             <li className="hover:bg-[#e4e6f8]">
                                                 <NavLink
-                                                    className={({ isActive }) => (isActive ? 'bg-red-500' : '')}
+                                                    
                                                     to="/add-car"
                                                 >
                                                     Add Car
@@ -89,7 +89,7 @@ const Navbar = () => {
                                             </li>
                                             <li className="hover:bg-[#e4e6f8]">
                                                 <NavLink
-                                                    className={({ isActive }) => (isActive ? 'bg-red-500' : '')}
+                                                    
                                                     to="/my-cars"
                                                 >
                                                     My Cars
@@ -97,10 +97,18 @@ const Navbar = () => {
                                             </li>
                                             <li className="hover:bg-[#e4e6f8]">
                                                 <NavLink
-                                                    className={({ isActive }) => (isActive ? 'bg-red-500' : '')}
+                                                    
                                                     to="/my-booking"
                                                 >
-                                                    Add Car
+                                                    My Bookings
+                                                </NavLink>
+                                            </li>
+                                            <li className="hover:bg-[#e4e6f8]">
+                                                <NavLink
+                                                    
+                                                    to="/manage-car"
+                                                >
+                                                    Manage Cars
                                                 </NavLink>
                                             </li>
                                         </ul>
