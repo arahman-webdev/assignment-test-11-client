@@ -9,6 +9,7 @@ import AvailableCar from "../Pages/AvailableCar";
 import MyBooking from "../Pages/MyBooking";
 import AddCarForm from "../Pages/AddCar";
 import UpdateCar from "./PrivateLayout/UpdateCar";
+import CarDetail from "./PrivateLayout/CarDetail";
 
 
 
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
             {
                 path: '/update/:id',
                 element: <UpdateCar></UpdateCar>,
+                loader: ({params}) => fetch(`http://localhost:5000/cars/${params.id}`)
+            },
+            {
+                path: '/detail/:id',
+                element: <CarDetail></CarDetail>,
                 loader: ({params}) => fetch(`http://localhost:5000/cars/${params.id}`)
             },
             {

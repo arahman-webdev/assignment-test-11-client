@@ -39,6 +39,21 @@ const AvailableCar = () => {
     });
 
     return (
+<div>
+        <div
+        className="relative bg-cover bg-center h-96 md:h-[500px]"
+        style={{
+            backgroundImage: `url('https://i.ibb.co.com/SKjZZ15/car-detail-3.jpg')`,
+        }}
+    >
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+
+        {/* Content on top of the overlay */}
+        <div className="relative z-10 flex justify-center items-center h-full">
+            <h1 className="text-white text-4xl md:text-5xl font-bold">Welcome to Our Cars</h1>
+        </div>
+    </div>
         <div className="py-10 px-6 w-4/5 mx-auto">
             <h2 className="text-4xl font-bold text-center mb-8">Available Cars</h2>
 
@@ -139,30 +154,34 @@ const AvailableCar = () => {
                             <div className="flex flex-col">
                                 <h3 className="text-lg font-bold mb-1 flex items-center gap-4"><span><IoLogoModelS /></span>{car.carModel}</h3>
                                 <p className="text-gray-500 mb-1 flex pb-4">
-                                    {car?.description.substring(0,32)}.......
+                                    {car?.description.substring(0, 32)}.......
                                 </p>
-                                
+
                                 <hr className="pt-4"></hr>
                                 <p className="text-gray-500 mb-1 flex items-center gap-6">
                                     <span className="font-bold text-black"><FaDollarSign className="inline" />Fee </span>  <span>${car.dailyPrice} / day</span>
-                                    
+
                                 </p>
-                                
+
                                 <p
                                     className={`mb-3 ${car.availability === "Available" ? "text-green-500 flex gap-5" : "text-red-500"
                                         }`}
                                 >
-                                   <span className="text-black font-bold">Availability:</span> <span>{car?.availability}</span>
+                                    <span className="text-black font-bold">Availability:</span> <span>{car?.availability}</span>
                                 </p>
                                 <p className="flex items-center">
-                                   <span className="text-black font-bold">Availability:</span> <span>{car?.features.map(feature => <span>
-                                    {feature[1]}
-                                   </span>)},</span>
+                                    <span className="text-black font-bold mr-3">Availability:</span> <span>{car?.features.map(feature =>
+                                        <span className="mr-3">
+                                            {feature},
+                                        </span>)}</span>
+                                </p>
+                                <p>
+                                    <span>Location:{car?.location}</span>
                                 </p>
                             </div>
                             {/* Button */}
                             <Link
-                                to={`/car/${car._id}`}
+                                to={`/detail/${car._id}`}
                                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
                             >
                                 Book Now
@@ -178,6 +197,8 @@ const AvailableCar = () => {
                 <p className="text-center text-gray-500 mt-8">No cars available for the selected filters.</p>
             )}
         </div>
+        </div>
+
     );
 };
 
