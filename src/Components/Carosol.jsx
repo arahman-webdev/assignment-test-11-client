@@ -10,7 +10,7 @@ const Carousel = () => {
   // Array with image URLs and text for each slide
   const slides = [
     {
-      img: "https://i.ibb.co.com/JsdHzwR/slider-1.jpg",
+      img: "https://i.ibb.co.com/h2dmDhn/slider4.jpg",
       title: "Drive Your Dreams Today!",
       description: 'Discover the perfect car for your journey. Your next adventure begins here—find the car!'
       
