@@ -58,7 +58,7 @@ const AddCarForm = () => {
 
 
 
-        fetch('http://localhost:5000/add-car', {
+        fetch('https://assignment-test-11-server.vercel.app/add-car', {
             method: "POST",
             headers: {
                 "Content-type": "application/json"

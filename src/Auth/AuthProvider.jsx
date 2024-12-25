@@ -53,7 +53,7 @@ const AuthProvider = ({children}) => {
         loading,
 
     }
-    // const {data} =   axios.post('http://localhost:5000/jwt', {userEmail: res.user.email})
+    // const {data} =   axios.post('https://assignment-test-11-server.vercel.app/jwt', {userEmail: res.user.email})
     // console.log(data)
 
     useEffect(() => {
@@ -62,7 +62,7 @@ const AuthProvider = ({children}) => {
             setUser(currentUser);
       
             try {
-              const response = await axios.post("http://localhost:5000/jwt", {
+              const response = await axios.post("https://assignment-test-11-server.vercel.app/jwt", {
                 userEmail: currentUser?.email,
               }, 
               {withCredentials: true}
@@ -74,7 +74,7 @@ const AuthProvider = ({children}) => {
           } else {
             // Handle logout case
             setUser(currentUser)
-             await axios.get('http://localhost:5000/logout', {
+             await axios.get('https://assignment-test-11-server.vercel.app/logout', {
                 withCredentials: true
              })
             

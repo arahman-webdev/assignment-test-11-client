@@ -49,7 +49,7 @@ const UpdateCar = () => {
 
        
 
-        axios.put(`http://localhost:5000/cars/${car._id}`, updateCarInfo)
+        axios.put(`https://assignment-test-11-server.vercel.app/cars/${car._id}`, updateCarInfo)
         .then(res => {
             const data = res.data;
             console.log(data)

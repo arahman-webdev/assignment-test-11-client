@@ -46,17 +46,17 @@ const router = createBrowserRouter([
             {
                 path: '/available-cars',
                 element: <AvailableCar></AvailableCar>,
-                loader: () => fetch('http://localhost:5000/cars')
+                loader: () => fetch('https://assignment-test-11-server.vercel.app/cars')
             },
             {
                 path: '/update/:id',
                 element: <PrivateLayout><UpdateCar></UpdateCar>,</PrivateLayout>,
-                loader: ({ params }) => fetch(`http://localhost:5000/cars/${params.id}`)
+                loader: ({ params }) => fetch(`https://assignment-test-11-server.vercel.app/cars/${params.id}`)
             },
             {
                 path: '/detail/:id',
                 element: <CarDetail></CarDetail>,
-                loader: ({ params }) => fetch(`http://localhost:5000/cars/${params.id}`)
+                loader: ({ params }) => fetch(`https://assignment-test-11-server.vercel.app/cars/${params.id}`)
             },
             {
                 path: '/login',

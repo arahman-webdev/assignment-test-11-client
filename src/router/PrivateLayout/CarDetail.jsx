@@ -65,7 +65,7 @@ const CarDetail = () => {
         };
 
         axios
-          .post("http://localhost:5000/bookings", bookingData, {
+          .post("https://assignment-test-11-server.vercel.app/bookings", bookingData, {
             headers: {
               "Content-Type": "application/json",
             },

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import useAuth from './useAuth'
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://assignment-test-11-server.vercel.app",
   withCredentials: true,
 })
 
@@ -14,22 +14,20 @@ const useAxiosSecure = () => {
   const { logOutUser } = useAuth()
   useEffect(() => {
     axiosSecure.interceptors.response.use(
-      res => {
-        return res
-      },
-      async error => {
+      (res) => res, // Pass success responses as is
+      async (error) => {
         console.log(
-          'error caught from our very own axios interceptor-->',
+          'Error caught by axios interceptor -->',
           error.response
-        )
-        if (error.response.status === 401 || error.response.status === 403) {
-          // logout
-          logOutUser()
-          // navigate to login
-          navigate('/login')
+        );
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          // Log out the user and navigate to login
+          await logOutUser();
+          navigate('/login');
         }
+        return Promise.reject(error); // Ensure the error propagates
       }
-    )
+    );
   }, [logOutUser, navigate])
   return axiosSecure
 }

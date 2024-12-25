@@ -31,7 +31,7 @@ const MyBooking = () => {
     //     return console.log('Not Allowed')
     //   }
     //     axios
-    //         .delete(`http://localhost:5000/bookings/${id}`)
+    //         .delete(`https://assignment-test-11-server.vercel.app/bookings/${id}`)
     //         .then(() => {
     //             setManageCar((prev) => prev.filter((booking) => booking._id !== id));
     //         })
@@ -49,7 +49,7 @@ const MyBooking = () => {
 
       console.log(id, prevStatus)
 
-      axios.patch(`http://localhost:5000/booking-request-accept/${id}`, {
+      axios.patch(`https://assignment-test-11-server.vercel.app/booking-request-accept/${id}`, {
          status: 'Confirmed',
          availability: 'Unavailable'
       })
@@ -83,7 +83,7 @@ const MyBooking = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           // Update the booking status to 'Canceled'
-          axios.patch(`http://localhost:5000/booking-request-accept/${id}`, { status: 'Canceled' })
+          axios.patch(`https://assignment-test-11-server.vercel.app/booking-request-accept/${id}`, { status: 'Canceled' })
             .then(res => {
               console.log(res.data);
               const data = res.data;
