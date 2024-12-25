@@ -3,8 +3,7 @@ import { AuthContext } from "../../Auth/AuthProvider";
 import { FaCalendarAlt } from "react-icons/fa";
 import { TiCancel } from "react-icons/ti";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
+
 import Rechart from "../../Components/Rechart";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 

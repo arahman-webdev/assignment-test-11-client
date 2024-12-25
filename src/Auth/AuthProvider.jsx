@@ -53,8 +53,7 @@ const AuthProvider = ({children}) => {
         loading,
 
     }
-    // const {data} =   axios.post('https://assignment-test-11-server.vercel.app/jwt', {userEmail: res.user.email})
-    // console.log(data)
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
