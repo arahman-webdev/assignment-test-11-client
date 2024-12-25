@@ -52,7 +52,7 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="dropdown-content mt-3 w-[495px] p-2 text-2xl z-50 -left-20 bg-[#fff] text-[#000002]"
+                            className="dropdown-content mt-3 w-[490px] p-2 text-2xl z-50 -left-20 bg-[#fff] text-[#000002]"
                         >
                             {links}
                         </ul>
@@ -70,7 +70,7 @@ const Navbar = () => {
                     {user ? (
                         <div className="relative">
                             <img
-                                src={user.photoURL || "/default-avatar.png"}
+                                src={user?.photoURL || "/default-avatar.png"}
                                 alt="User"
                                 className="w-10 h-10 rounded-full cursor-pointer"
                                 onClick={() => setDropdownOpen(!dropdownOpen)}

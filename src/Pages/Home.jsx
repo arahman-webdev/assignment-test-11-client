@@ -4,6 +4,8 @@ import WhyChooseUs from '../Components/WhyChoose';
 import SpecialOffers from '../Components/SpecailOffer';
 import CarTable from '../Components/CarTable';
 import RecentListings from '../Components/RecentListings';
+import OurTeam from '../Components/OurTeam';
+import OurVission from '../Components/OurVisson';
 
 const Home = () => {
     return (
@@ -12,6 +14,8 @@ const Home = () => {
             <WhyChooseUs></WhyChooseUs>
             <SpecialOffers></SpecialOffers>
             <RecentListings></RecentListings>
+            <OurTeam></OurTeam>
+            <OurVission></OurVission>
         </div>
     );
 };

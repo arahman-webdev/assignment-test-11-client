@@ -2,20 +2,21 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Auth/AuthProvider";
+import useAxiosSecure from "../hook/useAxiosSecure";
 
 const MyCars = () => {
     const {user} = useContext(AuthContext)
-  
+    const axiosSecure = useAxiosSecure()
 
   const [cars, setCars] = useState([]);
   const [sortOption, setSortOption] = useState("");
 
 
     useEffect(() =>{
-        axios.get(`http://localhost:5000/cars?email=${user?.email}`)
+      axiosSecure.get(`/cars?email=${user?.email}`, {withCredentials: true})
         .then(res =>{
             const data = res.data;
             setCars(data)

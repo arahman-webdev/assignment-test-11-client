@@ -12,6 +12,7 @@ import UpdateCar from "./PrivateLayout/UpdateCar";
 import CarDetail from "./PrivateLayout/CarDetail";
 import ManageCar from "./PrivateLayout/ManageCar";
 import MyBooking from "./PrivateLayout/MyBooking";
+import PrivateLayout from "./PrivateLayout/PrivateLayout";
 
 
 
@@ -27,20 +28,20 @@ const router = createBrowserRouter([
             },
             {
                 path: '/add-car',
-                element: <AddCarForm></AddCarForm>
+                element: <PrivateLayout><AddCarForm></AddCarForm></PrivateLayout>
             },
             {
                 path: '/my-cars',
-                element: <MyCars></MyCars>,
+                element: <PrivateLayout><MyCars></MyCars></PrivateLayout>,
 
             },
             {
                 path: '/my-booking',
-                element: <MyBooking></MyBooking>
+                element: <PrivateLayout><MyBooking></MyBooking></PrivateLayout>
             },
             {
                 path: '/manage-car',
-                element: <ManageCar></ManageCar>
+                element: <PrivateLayout><ManageCar></ManageCar></PrivateLayout>
             },
             {
                 path: '/available-cars',
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/update/:id',
-                element: <UpdateCar></UpdateCar>,
+                element: <PrivateLayout><UpdateCar></UpdateCar>,</PrivateLayout>,
                 loader: ({ params }) => fetch(`http://localhost:5000/cars/${params.id}`)
             },
             {

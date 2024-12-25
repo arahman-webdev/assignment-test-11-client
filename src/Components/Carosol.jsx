@@ -51,7 +51,7 @@ const Carousel = () => {
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#020202] bg-opacity-65">
             {/* Fade Animation for Title */}
             <Fade triggerOnce>
-              <h2 className="md:text-9xl text-4xl font-bold font-Roboto text-[#CDF7FF] uppercase text-center w-7/12 mx-auto">
+              <h2 className="md:text-6xl lg:text-7xl xl:text-8xl text-4xl font-bold font-Roboto text-[#CDF7FF] uppercase text-center md:w-7/12 w-11/12 mx-auto">
                 {slide.title}
               </h2>
             </Fade>
@@ -59,7 +59,7 @@ const Carousel = () => {
             {/* Zoom Animation for Description */}
             <Zoom triggerOnce>
               <p
-                className="md:text-2xl text-xl font-semibold font-Roboto text-[#CDF7FF] uppercase text-center  w-7/12 mx-auto mb-10 mt-10"
+                className="md:text-2xl text-xl font-semibold font-Roboto text-[#CDF7FF] uppercase text-center  md:w-7/12 w-11/12 mx-auto mb-10 mt-10"
                 // style={{
                 //   WebkitTextStroke: "1px #CDF7FF",
                 //   WebkitTextFillColor: "transparent",

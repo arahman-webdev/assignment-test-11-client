@@ -10,6 +10,7 @@ const CarDetail = () => {
   const { user } = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(""); // State to store selected date
 
+  console.log(car)
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
   };
@@ -57,6 +58,7 @@ const CarDetail = () => {
           dailyPrice: car?.dailyPrice,
           email: user?.email,
           status: "Pending",
+          availability: car?.availability,
           carId: car?._id,
           buyerName: car?.hr_name,
           buyerEmail: car?.hr_email,

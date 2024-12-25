@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import googleImg from '../../assets/images/google.png'
 import { AuthContext } from '../../Auth/AuthProvider';
 import Swal from 'sweetalert2';
@@ -11,7 +11,9 @@ const Register = () => {
 
     const { createUser, loginWithGoogle, logOutUser } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false)
+    const location = useLocation()
     const navigate = useNavigate()
+
     //  const [success, setSuccess] = useState(null)
 
     const handleRegister = (e) => {
@@ -66,6 +68,8 @@ const Register = () => {
 
                 // Update user profile
                 return updateProfile(auth.currentUser, profile);
+
+                
             })
             .then(() => {
 
@@ -96,7 +100,7 @@ const Register = () => {
         loginWithGoogle()
             .then((res) => {
                 console.log("Google sign-in successful:", res.user);
-
+                navigate(location?.state? location?.state: '/')
 
             })
             .catch((error) => {
@@ -104,6 +108,8 @@ const Register = () => {
 
             });
     };
+
+    
     return (
         <div style={{ minHeight: 'calc(100vh - 200px)' }} className=' flex items-center'>
             <div className="max-w-lg mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl px-8 py-10 flex flex-col items-center justify-center w-full relative border">
@@ -167,7 +173,7 @@ const Register = () => {
                 </div>
 
                 <div className="mt-4 text-center cursor-pointer">
-                    <p>Already have an account? <Link to='/auth/login' className="text-red-500">Login now</Link></p>
+                    <p>Already have an account? <Link to='/login' className="text-red-500">Login now</Link></p>
                 </div>
                 <div className="divider">OR</div>
                 <div onClick={handleSignInWithGoogle} className="flex gap-2 cursor-pointer border px-5 py-3 rounded-md hover:bg-base-200 transition duration-200">

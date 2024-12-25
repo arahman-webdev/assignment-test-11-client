@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 import auth from '../Pages/Firebase/firebase.init';
+import axios from 'axios';
 // import auth from '../firebase.init';
 
 
@@ -49,19 +50,46 @@ const AuthProvider = ({children}) => {
         logOutUser,
         loginWithGoogle,
         user,
+        loading,
 
     }
+    // const {data} =   axios.post('http://localhost:5000/jwt', {userEmail: res.user.email})
+    // console.log(data)
 
-    useEffect(() =>{
-        const unsubscribe = onAuthStateChanged(auth, currentUser =>{
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+          if (currentUser?.email) {
+            setUser(currentUser);
+      
+            try {
+              const response = await axios.post("http://localhost:5000/jwt", {
+                userEmail: currentUser?.email,
+              }, 
+              {withCredentials: true}
+            );
+              console.log(response.data); // Access the data here
+            } catch (error) {
+              console.error("Error fetching JWT:", error);
+            }
+          } else {
+            // Handle logout case
             setUser(currentUser)
-            setLoading(false)
-        })
-        return () =>{
-            unsubscribe()
+             await axios.get('http://localhost:5000/logout', {
+                withCredentials: true
+             })
             
-        }
-    },[])
+            setUser(null); // Clear user state
+          }
+      
+          setLoading(false);
+        });
+      
+        return () => {
+          unsubscribe();
+        };
+      }, []);
+      
+    
 
     return (
         <AuthContext.Provider value={userInfo}>
