@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Carousel from '../Components/Carosol';
 import WhyChooseUs from '../Components/WhyChoose';
 import SpecialOffers from '../Components/SpecailOffer';
@@ -8,6 +8,8 @@ import OurTeam from '../Components/OurTeam';
 import OurVission from '../Components/OurVisson';
 
 const Home = () => {
+
+
     return (
         <div>
             <Carousel></Carousel>

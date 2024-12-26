@@ -10,9 +10,10 @@ import AvailableCar from "../Pages/AvailableCar";
 import AddCarForm from "../Pages/AddCar";
 import UpdateCar from "./PrivateLayout/UpdateCar";
 import CarDetail from "./PrivateLayout/CarDetail";
-import ManageCar from "./PrivateLayout/ManageCar";
+
 import MyBooking from "./PrivateLayout/MyBooking";
 import PrivateLayout from "./PrivateLayout/PrivateLayout";
+import ManageCar from "./PrivateLayout/ManageCar";
 
 
 

@@ -4,20 +4,20 @@ import { AuthContext } from "../../Auth/AuthProvider";
 import { GiConfirmed } from "react-icons/gi";
 import { TiCancel } from "react-icons/ti";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../hook/useAxiosSecure";
 
-const MyBooking = () => {
+
+const ManageCar = () => {
     const { user } = useContext(AuthContext);
     const [manageCar, setManageCar] = useState([]);
-    const axiosSecure = useAxiosSecure()
+    const [loading, setLoading] = useState(true)
 
     console.log(manageCar)
 
     useEffect(() => {
         if (!user?.email) return;
 
-        axiosSecure
-            .get(`/bookingRequet/${user?.email}`, {withCredentials: true})
+        axios
+            .get(`https://assignment-test-11-server.vercel.app/bookingRequet/${user?.email}`)
             .then((res) => {
                 setManageCar(res.data);
             })
@@ -26,19 +26,6 @@ const MyBooking = () => {
             });
     }, [user?.email]);
 
-    // const handleCancelBooking = (id, prevStatus) => {
-    //   if(prevStatus === 'Confirmed' || prevStatus === 'Canceled'){
-    //     return console.log('Not Allowed')
-    //   }
-    //     axios
-    //         .delete(`https://assignment-test-11-server.vercel.app/bookings/${id}`)
-    //         .then(() => {
-    //             setManageCar((prev) => prev.filter((booking) => booking._id !== id));
-    //         })
-    //         .catch((err) => {
-    //             console.error("Error cancelling booking:", err);
-    //         });
-    // };
 
 
     const handleChange = (id, prevStatus) =>{
@@ -62,6 +49,25 @@ const MyBooking = () => {
       })
     }
 
+
+    useEffect(() => {
+      const loadingTimer = setTimeout(() => setLoading(false), 1000);
+      return () => clearTimeout(loadingTimer); // Cleanup timer
+  }, []);
+
+  useEffect(() => {
+      document.title = "ManageCar | RideXpress";
+  }, []);
+  
+
+  if (loading) {
+      return (
+          <div className="flex justify-center items-center h-screen bg-black">
+              {/* <span className="loading loading-bars loading-lg text-[#CDF7FF]"></span> */}
+              <span className="loading loading-dots loading-lg text-[#CDF7FF]">Ride</span>
+          </div>
+      );
+  }
 
     const handleCancelBooking = (id, prevStatus) => {
       // Prevent cancellation if the previous status is 'Completed' or already 'Canceled'
@@ -187,4 +193,4 @@ const MyBooking = () => {
     );
 };
 
-export default MyBooking;
+export default ManageCar;

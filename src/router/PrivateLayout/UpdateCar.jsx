@@ -7,17 +7,7 @@ const UpdateCar = () => {
 
     const car = useLoaderData()
     console.log(car)
-    
-        const [images, setImages] = useState([]);
-    
-        const onDrop = (acceptedFiles) => {
-            setImages((prevImages) => [...prevImages, ...acceptedFiles]);
-        };
-    
-        const { getRootProps, getInputProps } = useDropzone({
-            onDrop,
-            accept: "image/*",
-        });
+
 
     const handleUpdateInfo = e =>{
         e.preventDefault()
@@ -43,7 +33,7 @@ const UpdateCar = () => {
             location,
             bookingCount,
             photoUrl,
-            images,
+           
           
         };
 
@@ -174,28 +164,7 @@ const UpdateCar = () => {
                     ></textarea>
                 </div>
 
-                {/* Images */}
-                <div className="mb-4">
-                    <label className="block text-sm font-semibold mb-2">Upload Images</label>
-                    <div
-                        {...getRootProps()}
-                        className="border-dashed border-2 border-gray-300 p-4 text-center cursor-pointer"
-                    >
-                        <input {...getInputProps()} />
-                        <p className="text-gray-500">Drag & drop images, or click to upload</p>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-4">
-                        {images.map((file, index) => (
-                            <div key={index} className="w-24 h-24 border rounded">
-                                <img
-                                    src={URL.createObjectURL(file)}
-                                    alt="Preview"
-                                    className="w-full h-full object-cover rounded"
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+
 
                 {/* photot url  */}
 

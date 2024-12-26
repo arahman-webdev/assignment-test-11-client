@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Auth/AuthProvider";
@@ -9,6 +9,19 @@ const CarDetail = () => {
   const car = useLoaderData();
   const { user } = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(""); // State to store selected date
+
+
+  // useEffect(() =>{
+  //   axios.get(`https://assignment-test-11-server.vercel.app/cars/${_id}`,{withCredentials:true})
+  //   .then(res => {
+  //     const data = res.data;
+  //     console.log(data)
+  //   })
+  // }, [])
+
+  useEffect(() =>{
+    document.title = "Car Detail | RideXpress"
+  },[])
 
   console.log(car)
   const handleDateChange = (e) => {
@@ -69,6 +82,7 @@ const CarDetail = () => {
             headers: {
               "Content-Type": "application/json",
             },
+           
           })
           .then((res) => {
             Swal.fire("Booked!", "Your booking is confirmed.", "success");

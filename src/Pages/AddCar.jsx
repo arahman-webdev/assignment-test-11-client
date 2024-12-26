@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Swal from "sweetalert2";
 import { AuthContext } from "../Auth/AuthProvider";
@@ -7,18 +7,15 @@ import { formatISO } from "date-fns";
 const AddCarForm = () => {
 
     const { user } = useContext(AuthContext)
-    const [images, setImages] = useState([]);
+    
 
-    // const onDrop = (acceptedFiles) => {
-    //     setImages((prevImages) => [...prevImages, ...acceptedFiles]);
-    // };
+      useEffect(() =>{
+        document.title = "Add car | RideXpress"
+      },[])
 
-    // const { getRootProps, getInputProps } = useDropzone({
-    //     onDrop,
-    //     accept: "image/*",
-    // });
 
-    // const today = new Date().toLocaleDateString();
+
+
     const today = formatISO(new Date());
 
     const handleAddCar = (e) => {
@@ -46,7 +43,6 @@ const AddCarForm = () => {
             location,
             bookingCount,
             photoUrl,
-            images,
             today,
             booking_status,
             hr_name: user?.displayName,

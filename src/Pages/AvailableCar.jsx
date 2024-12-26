@@ -65,7 +65,7 @@ const AvailableCar = () => {
                 <h2 className="text-4xl font-bold text-center mb-8">Available Cars</h2>
 
                 {/* Search and Sorting Section */}
-                <div className="flex flex-wrap items-center justify-between mb-8">
+                <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
                     {/* Search Bar */}
                     <div>
                         <select
@@ -111,9 +111,9 @@ const AvailableCar = () => {
                         </div>
 
                         {/* Sorting Options */}
-                        <div className="flex items-center space-x-4 mt-4 md:mt-0">
+                        <div className="flex items-center justify-center space-x-4  gap-4">
                             {/* View Toggle */}
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center justify-center space-x-2">
                                 <button
                                     className={`p-2 px-4 py-4 border rounded-md ${viewMode === "grid" ? "bg-gray-300" : ""}`}
                                     onClick={() => setViewMode("grid")}

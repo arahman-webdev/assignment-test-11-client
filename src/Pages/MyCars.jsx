@@ -5,18 +5,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Auth/AuthProvider";
-import useAxiosSecure from "../hook/useAxiosSecure";
+
 
 const MyCars = () => {
     const {user} = useContext(AuthContext)
-    const axiosSecure = useAxiosSecure()
+    const [loading, setLoading] = useState(true)
 
   const [cars, setCars] = useState([]);
   const [sortOption, setSortOption] = useState("");
 
 
     useEffect(() =>{
-      axiosSecure.get(`/cars?email=${user?.email}`, {withCredentials: true})
+      axios.get(`https://assignment-test-11-server.vercel.app/cars?email=${user?.email}`)
         .then(res =>{
             const data = res.data;
             setCars(data)
@@ -73,6 +73,25 @@ const MyCars = () => {
     setCars(sortedCars);
   };
 
+
+    useEffect(() => {
+      const loadingTimer = setTimeout(() => setLoading(false), 1000);
+      return () => clearTimeout(loadingTimer); // Cleanup timer
+  }, []);
+  
+  useEffect(() => {
+      document.title = "MyCars | RideXpress";
+  }, []);
+  
+  
+  if (loading) {
+      return (
+          <div className="flex justify-center items-center h-screen bg-blue-500">
+              {/* <span className="loading loading-bars loading-lg text-[#CDF7FF]"></span> */}
+              <span className="loading loading-dots loading-lg text-[#CDF7FF]">Ride</span>
+          </div>
+      );
+  }
   return (
     <div className="py-28">
       <div>

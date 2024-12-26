@@ -55,38 +55,19 @@ const AuthProvider = ({children}) => {
     }
 
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-          if (currentUser?.email) {
+
+
+
+      useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-      
-            try {
-              const response = await axios.post("https://assignment-test-11-server.vercel.app/jwt", {
-                userEmail: currentUser?.email,
-              }, 
-              {withCredentials: true}
-            );
-              console.log(response.data); // Access the data here
-            } catch (error) {
-              console.error("Error fetching JWT:", error);
-            }
-          } else {
-            // Handle logout case
-            setUser(currentUser)
-             await axios.get('https://assignment-test-11-server.vercel.app/logout', {
-                withCredentials: true
-             })
-            
-            setUser(null); // Clear user state
-          }
-      
-          setLoading(false);
+            setLoading(false);
         });
-      
+
         return () => {
-          unsubscribe();
+            unsubscribe();
         };
-      }, []);
+    }, []);
       
     
 

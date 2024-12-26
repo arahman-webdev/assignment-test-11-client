@@ -5,18 +5,24 @@ import { TiCancel } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
 import Rechart from "../../Components/Rechart";
-import useAxiosSecure from "../../hook/useAxiosSecure";
+
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const MyBooking = () => {
-  const axiosSecure = useAxiosSecure()
+
+
+  
+   const [loading, setLoading] = useState(true)
+  
   const { user } = useContext(AuthContext);
   const [bookingCar, setBookingCar] = useState([]);
 
   useEffect(() => {
     if (!user?.email) return;
-
-    axiosSecure
-      .get(`/bookings/${user.email}`, {withCredentials:true})
+    
+    axios
+      .get(`https://assignment-test-11-server.vercel.app/bookings/${user.email}`)
       .then((res) => setBookingCar(res.data))
       .catch((err) => console.error("Error fetching bookings:", err));
   }, [user?.email]);
@@ -26,14 +32,77 @@ const MyBooking = () => {
   };
 
   const handleCancelBooking = (id, prevStatus) => {
-    // Cancel functionality...
+    // Prevent cancellation if the previous status is 'Completed' or already 'Canceled'
+    if (prevStatus === 'Completed' || prevStatus === 'Canceled') {
+      return console.log('Not Allowed');
+    }
+  
+    console.log(id, prevStatus);
+  
+    // Show confirmation dialog before canceling
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Update the booking status to 'Canceled'
+        axios.patch(`https://assignment-test-11-server.vercel.app/booking-request-accept/${id}`, { status: 'Canceled' })
+          .then(res => {
+            console.log(res.data);
+            const data = res.data;
+            if (data.modifiedCount) {
+              Swal.fire({
+                title: "Canceled!",
+                text: "The booking has been canceled.",
+                icon: "success"
+              });
+  
+              // Update the state to reflect the cancellation in real-time
+              setManageCar((prevBookings) =>
+                prevBookings.map((car) =>
+                  car._id === id ? { ...car, status: 'Canceled' } : car
+                )
+              );
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            Swal.fire("Error!", "Failed to cancel the booking. Try again.", "error");
+          });
+      }
+    });
   };
+
 
   // Prepare data for Rechart
   const chartData = bookingCar.map((car) => ({
     name: car.carModel || "Unknown",
     dailyPrice: car.dailyPrice || 0,
   }));
+
+  useEffect(() => {
+    const loadingTimer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(loadingTimer); // Cleanup timer
+}, []);
+
+useEffect(() => {
+    document.title = "MyBooking | RideXpress";
+}, []);
+
+
+if (loading) {
+    return (
+        <div className="flex justify-center items-center h-screen bg-black">
+            {/* <span className="loading loading-bars loading-lg text-[#CDF7FF]"></span> */}
+            <span className="loading loading-dots loading-lg text-[#CDF7FF]">Ride</span>
+        </div>
+    );
+}
 
   return (
     <div className="p-6">
