@@ -8,6 +8,7 @@ import Rechart from "../../Components/Rechart";
 
 import axios from "axios";
 import Swal from "sweetalert2";
+import { format } from "date-fns";
 
 const MyBooking = () => {
 
@@ -27,9 +28,71 @@ const MyBooking = () => {
       .catch((err) => console.error("Error fetching bookings:", err));
   }, [user?.email]);
 
+
+
   const handleEditBooking = (car) => {
-    // Editing functionality...
+    // Helper function to validate dates
+    const isValidDate = (date) => !isNaN(Date.parse(date));
+  
+    // Log the car object for debugging
+    console.log("Editing car:", car);
+  
+    Swal.fire({
+      title: "Modify Booking Date",
+      html: `
+        <label for="bookingDate" class="block text-left mb-2">Booking Date:</label>
+        <input id="bookingDate" type="date" class="swal2-input" value="${
+          isValidDate(car?.bookingDate)
+            ? format(new Date(car.bookingDate), "yyyy-MM-dd")
+            : ""
+        }">
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+      preConfirm: () => {
+        const bookingDate = document.getElementById("bookingDate").value;
+  
+        if (!bookingDate) {
+          Swal.showValidationMessage("Booking date is required!");
+          return null;
+        }
+  
+        return { bookingDate };
+      },
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        const { bookingDate } = result.value;
+  
+        // API call to update booking date
+        axios
+          .patch(`https://assignment-test-11-server.vercel.app/bookingRequet/${car?._id}`, {
+            bookingDate,
+          })
+          .then(() => {
+            // Update the local state to reflect the change
+            setBookingCar((prev) =>
+              prev.map((item) =>
+                item._id === car._id ? { ...item, bookingDate } : item
+              )
+            );
+            Swal.fire("Updated!", "Booking date has been updated.", "success");
+          })
+          .catch((err) => {
+            console.error("Error updating booking date:", err);
+            Swal.fire("Error!", "Failed to update booking date.", "error");
+          });
+      }
+    });
   };
+  
+  
+      
+    
+
+
+
+
+
 
   const handleCancelBooking = (id, prevStatus) => {
     // Prevent cancellation if the previous status is 'Completed' or already 'Canceled'

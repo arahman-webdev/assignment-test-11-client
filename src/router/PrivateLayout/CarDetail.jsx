@@ -10,18 +10,11 @@ const CarDetail = () => {
   const { user } = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(""); // State to store selected date
 
-
-  // useEffect(() =>{
-  //   axios.get(`https://assignment-test-11-server.vercel.app/cars/${_id}`,{withCredentials:true})
-  //   .then(res => {
-  //     const data = res.data;
-  //     console.log(data)
-  //   })
-  // }, [])
-
   useEffect(() =>{
     document.title = "Car Detail | RideXpress"
   },[])
+
+
 
   console.log(car)
   const handleDateChange = (e) => {
@@ -159,6 +152,7 @@ const CarDetail = () => {
                 value={selectedDate}
                 onChange={handleDateChange}
                 required
+                min={new Date().toISOString().split("T")[0]} // Set min to today's date in YYYY-MM-DD format
               />
             </label>
 

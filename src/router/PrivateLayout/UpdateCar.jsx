@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateCar = () => {
 
@@ -9,7 +10,7 @@ const UpdateCar = () => {
     console.log(car)
 
 
-    const handleUpdateInfo = e =>{
+    const handleUpdateInfo = e => {
         e.preventDefault()
 
         const form = e.target;
@@ -33,20 +34,30 @@ const UpdateCar = () => {
             location,
             bookingCount,
             photoUrl,
-           
-          
+
+
         };
 
-       
+
 
         axios.put(`https://assignment-test-11-server.vercel.app/cars/${car._id}`, updateCarInfo)
-        .then(res => {
-            const data = res.data;
-            console.log(data)
-        })
-        .catch(error =>{
-            console.log(error)
-        })
+            .then(res => {
+                const data = res.data;
+                console.log(data)
+
+                if (data.modifiedCount > 0) {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "You added a car!",
+                        icon: "success"
+                    });
+                }
+                form.reset()
+            })
+            .catch(error => {
+                console.log(error)
+
+            })
 
     }
     return (

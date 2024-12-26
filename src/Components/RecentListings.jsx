@@ -11,7 +11,7 @@ const RecentListings = () => {
       const data = res.data;
       setListingCars(data);
 
-      const sortedCar = data.sort((a, b) => new Date(b.today) - new Date(a.today))
+      const sortedCar = data.sort((a, b) => new Date(b.today) - new Date(a.today)).slice(0,6)
       setListingCars(sortedCar)
 
     });

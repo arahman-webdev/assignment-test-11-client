@@ -72,6 +72,8 @@ const AddCarForm = () => {
                       });
                 }
             })
+
+            form.reset()
     };
 
     return (

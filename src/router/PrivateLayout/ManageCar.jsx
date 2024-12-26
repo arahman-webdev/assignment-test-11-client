@@ -28,28 +28,113 @@ const ManageCar = () => {
 
 
 
-    const handleChange = (id, prevStatus) =>{
 
-      if(prevStatus === 'Confirmed' || prevStatus === 'Canceled'){
-        return console.log('Not Allowed')
+    
+
+ 
+    
+    const handleChange = (id, prevStatus) => {
+      if (prevStatus === "Confirmed" || prevStatus === "Canceled") {
+        return console.log("Not Allowed");
       }
+    
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You are about to confirm this booking. Do you want to continue?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, confirm it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Proceed with the API request
+          axios
+            .patch(
+              `https://assignment-test-11-server.vercel.app/booking-request-accept/${id}`,
+              {
+                status: "Confirmed",
+                availability: "Unavailable",
+              }
+            )
+            .then((res) => {
+              const data = res.data;
+              console.log(data);
+    
+              Swal.fire("Confirmed!", "The booking has been confirmed successfully.", "success");
+    
+              // Auto-refresh after confirmation
+              // Update the state with new booking data to force a UI refresh
+              setManageCar((prevBookings) =>
+                prevBookings.map((car) =>
+                  car._id === id ? { ...car, status: "Confirmed", availability: "Unavailable" } : car
+                )
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+              Swal.fire(
+                "Error!",
+                "There was an issue confirming the booking. Please try again.",
+                "error"
+              );
+            });
+        } else {
+          Swal.fire("Cancelled", "The booking confirmation has been cancelled.", "info");
+        }
+      });
+    };
+    
 
-      console.log(id, prevStatus)
-
-      axios.patch(`https://assignment-test-11-server.vercel.app/booking-request-accept/${id}`, {
-         status: 'Confirmed',
-         availability: 'Unavailable'
-      })
-      .then(res => {
-        const data = res.data;
-        console.log(data)
-      })
-      .catch(error =>{
-        console.log(error)
-      })
-    }
-
-
+    const handleCancelBooking = (id, prevStatus) => {
+      // Prevent cancellation if the previous status is 'Completed' or already 'Canceled'
+      if (prevStatus === "Completed" || prevStatus === "Canceled") {
+        return console.log("Not Allowed");
+      }
+    
+      console.log(id, prevStatus);
+    
+      // Show confirmation dialog before canceling
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, cancel it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Update the booking status to 'Canceled'
+          axios
+            .patch(
+              `https://assignment-test-11-server.vercel.app/booking-request-accept/${id}`,
+              { status: "Canceled" }
+            )
+            .then((res) => {
+              const data = res.data;
+              console.log(data);
+              
+              Swal.fire("Canceled!", "The booking has been canceled successfully.", "success");
+    
+                // Auto-refresh after cancellation
+                // Update the state to reflect the cancellation in real-time
+                setManageCar((prevBookings) => {
+                  // Ensure we're updating only the booking that was canceled
+                  return prevBookings.map((car) =>
+                    car._id === id ? { ...car, status: "Canceled" } : car
+                  );
+                });
+              
+            })
+            .catch((error) => {
+              console.log(error);
+              Swal.fire("Error!", "Failed to cancel the booking. Try again.", "error");
+            });
+        }
+      });
+    };
+    
     useEffect(() => {
       const loadingTimer = setTimeout(() => setLoading(false), 1000);
       return () => clearTimeout(loadingTimer); // Cleanup timer
@@ -68,55 +153,6 @@ const ManageCar = () => {
           </div>
       );
   }
-
-    const handleCancelBooking = (id, prevStatus) => {
-      // Prevent cancellation if the previous status is 'Completed' or already 'Canceled'
-      if (prevStatus === 'Completed' || prevStatus === 'Canceled') {
-        return console.log('Not Allowed');
-      }
-    
-      console.log(id, prevStatus);
-    
-      // Show confirmation dialog before canceling
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, cancel it!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Update the booking status to 'Canceled'
-          axios.patch(`https://assignment-test-11-server.vercel.app/booking-request-accept/${id}`, { status: 'Canceled' })
-            .then(res => {
-              console.log(res.data);
-              const data = res.data;
-              if (data.modifiedCount) {
-                Swal.fire({
-                  title: "Canceled!",
-                  text: "The booking has been canceled.",
-                  icon: "success"
-                });
-    
-                // Update the state to reflect the cancellation in real-time
-                setManageCar((prevBookings) =>
-                  prevBookings.map((car) =>
-                    car._id === id ? { ...car, status: 'Canceled' } : car
-                  )
-                );
-              }
-            })
-            .catch(error => {
-              console.log(error);
-              Swal.fire("Error!", "Failed to cancel the booking. Try again.", "error");
-            });
-        }
-      });
-    };
-
-
     return (
 <div className="p-6">
 <h1 className="text-3xl font-bold text-center mb-8 flex items-center justify-center gap-4">Bookings Request: <span className="bg-[#ECF5FF] px-10 py-1 rounded-full text-blue-500">{manageCar?.length}</span> </h1>
