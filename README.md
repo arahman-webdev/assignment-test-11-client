@@ -1,5 +1,6 @@
 # Project Name: RideXpress
-
+# 🚗 Car Rental Website
+A modern Car Rental web application where users can browse, book, and manage rental cars with ease. Built using React.js, Node.js, Express.js, MongoDB, and Firebase authentication, this platform provides a seamless car rental experience.
 
 # Live Url : https://assignment-test-11.netlify.app/
 
@@ -24,9 +25,38 @@
 4. Responsive Design and Navigation
 5. Private Routes for user only
 
+# Frontend Technology:
+React.js – For building the UI
+Tailwind CSS – For styling
+Axios/Fetch API – For handling API requests
+React Router – For navigation
+Context API - For state managemen
 
-# npm packages I have used.
+# Backend Technology:
+Node.js – For server-side logic
+Express.js – For creating API endpoints
+MongoDB / PostgreSQL (if used) – For database management
 
-1. npm date fns
-2. npm sweet alert
-3. npm rechart
+# Frontend Dependencies
+react-router-dom – For client-side routing (if using React Router)
+axios – For making API requests
+tailwindcss – For styling
+daisyui – UI component library
+react-icons – For adding icons
+swipper for sliding
+Firebase
+date fns
+rechart
+sweet alert
+
+# Backend Dependencies (Node.js & Express.js)
+express – Web framework for Node.js
+cors – For handling cross-origin requests
+dotenv – For managing environment variables
+
+# How to Run the Project Locally.
+1. Clone the Repository
+2. Install Dependencies
+3. Setup Environment Variables
+4. configure Firebase in your project
+5. using MongoDB, ensure MongoDB is running locally or on MongoDB Atlas.
